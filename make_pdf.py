@@ -166,8 +166,7 @@ def iterdict(data):
                 addParagraph(document, v)
 
 
-document = []           
-document.append(Image(path + "resources/shield.png", 1*inch, 1.2*inch))
+document = []
 
 now = datetime.datetime.now()
 docTitle = "Security Scan Results: " + str(now.strftime("%m/%d/%Y %H:%M"))
