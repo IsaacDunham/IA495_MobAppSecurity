@@ -150,7 +150,6 @@ level = 2
 
 def iterdict(data):
     global level
-    print("Level is ", level)
     for k, v in data.items():
         headerFunc = pickLevelFunc(level)
         headerFunc(document, k)
