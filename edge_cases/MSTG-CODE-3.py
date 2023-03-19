@@ -1,16 +1,15 @@
 #!/usr/bin/python
 # 1. ensure that cppFlags "-fvisibility=hidden" is set in the build.gradle file
 
-# import functions from util.py
-sys.path.append(os.getcwd() + "/library/")
-
 ### Imports ###
-from util import write_scanresults
+
 import sys
 import os
 import glob
 
-
+# import functions from util.py
+sys.path.append(os.getcwd() + "/library/")
+from util import write_scanresults
 
 ### static variables ###
 

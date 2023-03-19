@@ -5,8 +5,6 @@
 # 2. Ensure that code-signing certificate belongs to the developer. --
 #   Make sure it is not CN=Android Debug. Use jarsigner.
 
-# import functions from util.py
-sys.path.append(os.getcwd() + "/library/")
 
 ### Imports ###
 
@@ -15,6 +13,8 @@ import os
 import sys
 from pathlib import Path
 from subprocess import Popen, PIPE
+
+sys.path.append(os.getcwd() + "/library/")
 from util import write_scanresults
 
 ### static variables ###
