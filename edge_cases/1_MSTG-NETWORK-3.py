@@ -13,6 +13,10 @@ import yaml
 import json
 import glob
 
+#import functions from util.py
+sys.path.append(os.getcwd() + "/library/")
+from util import write_scanresults
+
 
 ### Static Variables ###
 
@@ -46,20 +50,6 @@ version_dict = {}
 ### Functions ###
 
 
-def write_scanresults(results, scanfile):
-    # if file doesn't exist, create it
-    if not os.path.exists(scanfile):
-        with open(scanfile, "w+") as f:
-            json.dump({"results": results}, f, indent=4)
-    else:
-        with open(scanfile, "r+") as f:
-            outresults = json.load(f)
-            outresults["results"].update(results)
-
-        with open(scanfile, "w+") as f:
-            json.dump(outresults, f, indent=4)
-
-
 # YAML doesn't support unknown tags, so we must ignore it.
 # solution via onlynone https://stackoverflow.com/users/436287/onlynone
 def unknown(loader, suffix, node):
@@ -78,7 +68,7 @@ def unknown(loader, suffix, node):
 
 def main():
     global issue
-    
+
     issuefiles = []
     results = {}
     if len(sys.argv) < 2:

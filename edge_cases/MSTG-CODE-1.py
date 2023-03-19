@@ -10,9 +10,12 @@ from subprocess import Popen, PIPE
 from pathlib import Path
 import sys
 import os
-import yaml
 import json
 import glob
+
+#import functions from util.py
+sys.path.append(os.getcwd() + "/library/")
+from util import write_scanresults
 
 ### static variables ###
 
@@ -25,36 +28,23 @@ signaturescheme_issue = False
 ### Functions ###
 
 
-def write_scanresults(results, scanfile):
-    # if file doesn't exist, create it
-    if not os.path.exists(scanfile):
-        with open(scanfile, "w+") as f:
-            json.dump({"results": results}, f, indent=4)
-    else:
-        with open(scanfile, "r+") as f:
-            outresults = json.load(f)
-            outresults["results"].update(results)
-
-        with open(scanfile, "w+") as f:
-            json.dump(outresults, f, indent=4)
-
 ### Execution ###
 
 
 def main():
-    global issue 
-    global debug_issue
-    global signaturescheme_issue
-
-
-    issuefiles = []
-    results = {}
     if len(sys.argv) < 2:
         print(
             "Usage: " + sys.argv[0] + " APK file or root directory of mobile application")
         sys.exit(1)
 
     path = os.path.dirname(sys.argv[1])
+
+    global issue 
+    global debug_issue
+    global signaturescheme_issue
+
+    issuefiles = []
+    results = {}
     files = []
 
     for f in glob.glob(path + "/**/*.apk", recursive=True):
@@ -73,16 +63,20 @@ def main():
         friendlyname = os.path.basename(filename)
 
         # check targetSdkVersion level
-        with open(os.getcwd() + "/edge_cases/apktool/" + friendlyname +
-                  "_targetSdkVersion.txt", "r") as f:
-            targetSdkVersion = int(f.read())
+        if os.path.exists(os.getcwd() + "/edge_cases/apktool/" + friendlyname +
+                  "_targetSdkVersion.txt"):
+            with open(os.getcwd() + "/edge_cases/apktool/" + friendlyname +
+                    "_targetSdkVersion.txt", "r") as f:
+                targetSdkVersion = int(f.read())
+        else:
+            print("targetSdkVersion not found for " + filename + ". Noting as 0.")
+            targetSdkVersion = 0
 
         if targetSdkVersion < 24:
             print(
                 "API level is below 24. Skipping v1 and v2 scheme check for " + filename)
 
         elif targetSdkVersion >= 24:
-            print("Running apksigner verify")
             p = Popen(["apksigner", "verify",
                       "--verbose", filename], stdout=PIPE)
             output, err = p.communicate()
@@ -112,7 +106,6 @@ def main():
                 signaturescheme_issue = True
 
         # use jarsigner to check if the code-signing certificate belongs to the developer
-        print("Running jarsigner verify")
         p = Popen(["jarsigner", "--verify", "-verbose",
                   "-certs", filename], stdout=PIPE)
         output, err = p.communicate()
@@ -161,7 +154,7 @@ def main():
                     "owasp-mobile": "M3: Insecure Communication",
                     "reference": ["https://developer.android.com/studio/publish/preparing#publishing-configure",
                                   "https://github.com/OWASP/owasp-masvs/blob/master/Document/0x12-V7-Code_quality_and_build_setting_requirements.md",
-                                  "https://github.com/OWASP/owasp-mastg/blob/master/Document/0x05i-Testing-Code-Quality-and-Build-Settings.md"
+                                  "https://github.com/OWASP/owasp-mastg/blob/master/Document/0x05i-Testing-Code-Quality-and-Build-Settings.md#making-sure-that-the-app-is-properly-signed-mstg-code-1"
                                   ],
                     "severity": "WARNING"
                 }
