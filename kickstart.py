@@ -37,7 +37,7 @@ p = Popen(["mobsfscan", "--json", "-o", outpath, path], stdout=PIPE,
 output, err = p.communicate()
 rc = p.returncode
 
-"""if rc != 0: mobfscan is expected to have a non-zero return code, for now
+"""if rc != 0: mobsfscan is expected to have a non-zero return code, for now
     print("Error: " + str(err))
     print("mobsfscan failed")
     sys.exit(1)
