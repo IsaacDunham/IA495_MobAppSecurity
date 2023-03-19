@@ -1,6 +1,5 @@
 #!/usr/bin/python
-# 1. detect vulnerabilities in third-party dependencies using OWASP Dependency Check
-# 2. Detect undesired licenses used by the libraries of the application using OWASP dependency check
+# 1. detect vulnerabilities in third-party dependencies using OWASP Dependency Checker
 
 
 ### Imports ###
