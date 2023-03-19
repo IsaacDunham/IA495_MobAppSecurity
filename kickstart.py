@@ -50,7 +50,7 @@ for f in glob.glob(edgecases_dir + "*.py", recursive=True):
     scripts += [f]
 
 for script in scripts:
-    os.system(edgecases_dir + script + " " + path)
+    os.system(script + " " + path)
 
 
 # Run report script

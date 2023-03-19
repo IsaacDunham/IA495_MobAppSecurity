@@ -16,6 +16,8 @@ import glob
 
 ### Static Variables ###
 
+issue = False
+
 # results is the dictionary that holds the results of security scan scripts
 # use fields as is appropriate for context
 """  resultsdictionary schema:
@@ -39,6 +41,7 @@ import glob
 
 # Output JSON file holds all scan results under results key
 output_json = "scan_results.json"
+version_dict = {}
 
 ### Functions ###
 
@@ -74,6 +77,8 @@ def unknown(loader, suffix, node):
 
 
 def main():
+    global issue
+    
     issuefiles = []
     results = {}
     if len(sys.argv) < 2:
@@ -124,16 +129,23 @@ def main():
             data = yaml.safe_load(file)
             targetSdkVersion = int(data["sdkInfo"]["targetSdkVersion"])
 
-        # write targetSdkVersion to file to be referenced by
-        # MSTG-CODE-1 script
-        with open(outpath + friendlyname + "_targetSdkVersion.txt", "w") as f:
-                f.write(str(targetSdkVersion))
+        # For some reason, can't write to file in for loop. Seems to either 
+        # delete file or it never exits buffer. So, keep track of filenames
+        # and targetSdkVersions in dictionary to write later. 
+        # Referenced by MSTG-CODE-1 script
 
-        print("targetSdkVersion for file " + 
+        version_dict[filename] = targetSdkVersion
+
+        print("targetSdkVersion for file " +
               filename + " is: " + str(targetSdkVersion))
         if targetSdkVersion < 24:
             issue = True
             issuefiles.append(filename)
+    
+    for filename, targetSdkVersion in version_dict.items():
+        friendlyname = os.path.basename(filename)
+        with open (outpath + friendlyname + "_targetSdkVersion.txt", "w+") as f:
+            f.write(str(targetSdkVersion))
 
     if issue:
         if len(issuefiles) == 1:
@@ -157,4 +169,6 @@ def main():
         }
         write_scanresults(results, output_json)
         sys.exit(0)
+
+
 main()
