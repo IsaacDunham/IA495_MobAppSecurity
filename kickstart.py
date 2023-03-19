@@ -41,7 +41,6 @@ rc = p.returncode
     print("mobsfscan failed")
     sys.exit(1)
 """
-<<<<<<< HEAD
 
 # Run edge case scripts
 
@@ -51,11 +50,6 @@ for f in glob.glob(edgecases_dir + "*.py", recursive=True):
 
 for script in scripts:
     os.system(script + " " + path)
-=======
-    
-#Run edge case scripts
-os.system(edgecases_dir + "targetSdkVersion.py " + path)
->>>>>>> 64e76f7568fc02f6559e947165512e37e78a145e
 
 
 #Run report script
