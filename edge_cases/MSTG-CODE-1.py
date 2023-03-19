@@ -34,7 +34,7 @@ signaturescheme_issue = False
 def main():
     if len(sys.argv) < 2:
         print(
-            "Usage: " + sys.argv[0] + " APK file or root directory of mobile application")
+            "Usage: " + sys.argv[0] + " root directory of mobile application")
         sys.exit(1)
 
     path = os.path.dirname(sys.argv[1])

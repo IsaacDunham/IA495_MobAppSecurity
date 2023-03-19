@@ -186,7 +186,7 @@ timezone = str(datetime.datetime.now(
     datetime.timezone.utc).astimezone().tzinfo)
 
 docTitle = "Security Scan Results: " + \
-    str(now.strftime("%m/%d/%Y %H:%M") + " " + timezone)
+    str(now.strftime("%m/%d/%Y %H:%M") + " - " + timezone)
 docFileName = "ScanResults_" + str(now.strftime("%m%d%Y_%H%M")) + ".pdf"
 
 addL1Header(document, docTitle)
