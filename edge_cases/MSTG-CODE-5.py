@@ -51,6 +51,7 @@ def main():
     p = Popen(["curl", "-s", "https://jeremylong.github.io/DependencyCheck/current.txt"], stdout=PIPE,
             stderr=PIPE)
     version, err = p.communicate()
+    version = version.decode("utf-8").strip()
 
     rc = p.returncode
     if rc != 0:
@@ -61,8 +62,11 @@ def main():
     if os.path.exists(outpath + "dependency-check"): #figure out full path later:
         print("OWASP dependency checker already installed")
     else:
-        os.mkdir (outpath)
+        if not (os.path.exists(outpath)):
+            os.mkdir (outpath)
+            print("created path" + outpath)
         depcheckURL = "https://github.com/jeremylong/DependencyCheck/releases/download/v" + version + "/dependency-check-" + version + "-release.zip"
+        print("retrieving OWASP dependency checker from " + depcheckURL + ". This may take a few minutes.")
         p = Popen(["wget", depcheckURL, "-O", outpath + "depcheck.zip" ], stdout=PIPE,
             stderr=PIPE)
         result, err = p.communicate()
@@ -81,7 +85,9 @@ def main():
             sys.exit(1)
 
     now = datetime.datetime.now()
-    outfilename = os.getcwd + "dependency-check-report" + str(now.strftime("%m%d%Y_%H%M")) + ".html"
+    outfilename = os.getcwd() + "/dependency-check-report_" + str(now.strftime("%m%d%Y_%H%M")) + ".html"
+    print("Running dependency check")
+    print("This may need to retrieve updates from the NVD database, which may take a few minutes.")
     p = Popen([outpath + "dependency-check/bin/dependency-check.sh", 
                "--scan", path, "--out", outfilename, "--format", "HTML"], 
                stdout=PIPE, stderr=PIPE)
@@ -92,6 +98,6 @@ def main():
         print("OWASP dependency checker failed")
         sys.exit(1)
     
-    print("To see dependency and license check results, open " + outfilename + " in a browser.")
+    print("To see dependency vulnerability results, open " + outfilename + " in a browser.")
     
 main()
