@@ -1,5 +1,8 @@
 #This is a library file containing functions common to multiple tests. It is not a test in itself.
 
+import os
+import json
+
 
 def write_scanresults(results, scanfile):
         #if file doesn't exist, create it

@@ -7,8 +7,6 @@ from subprocess import Popen, PIPE
 from pathlib import Path
 import sys
 import os
-import yaml
-import json
 import glob
 
 #import functions from util.py
@@ -28,6 +26,7 @@ issue = False
 
 
 def main():
+    print("checking that cppFlags is set to '-fvisibility=hidden'")
 
     if len(sys.argv) < 2:
         print(
@@ -49,15 +48,14 @@ def main():
         files = [files]
 
     for filename in files:
-        friendlyname = os.path.basename(filename)
         with open(filename, "r") as f:
             content = f.read()
             if "cppFlags" in content:
-                if "-fvisibility=hidden" in content:
-                    issue = False
-                else:
+                if "-fvisibility=hidden" not in content:
                     issue = True
                     issuefiles.append(filename)
+                    print("fvisibility issue found in " + filename)
+
 
     if issue:
         if len(issuefiles) == 1:
@@ -69,8 +67,8 @@ def main():
                 "metadata": {
                     "cwe": "CWE-215: Information Leak Through Debug Information",
                     "description": "The application does not set the cppFlags to '-fvisibility=hidden'. Dynamic symbols can be used to reverse engineer the application. Please ensure they are stripped via the visibility compiler flag",
-                    "masvs": "MSTG-CODE-1",
-                    "owasp-mobile": "M3: Insecure Communication",
+                    "masvs": "MSTG-CODE-3",
+                    "owasp-mobile": "M9: Reverse Engineering",
                     "reference": ["https://developer.android.com/studio/publish/preparing#publishing-configure",
                                   "https://github.com/OWASP/owasp-masvs/blob/master/Document/0x12-V7-Code_quality_and_build_setting_requirements.md",
                                   "https://github.com/OWASP/owasp-mastg/blob/master/Document/0x05i-Testing-Code-Quality-and-Build-Settings.md#testing-for-debugging-symbols-mstg-code-3"

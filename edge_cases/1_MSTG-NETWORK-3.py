@@ -10,7 +10,6 @@ from pathlib import Path
 import sys
 import os
 import yaml
-import json
 import glob
 
 #import functions from util.py
