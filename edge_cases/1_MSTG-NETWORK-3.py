@@ -4,6 +4,8 @@
 # read the contents of the file in Python and extract the targetSdkVersion.
 
 ### Imports ###
+sys.path.append(os.getcwd() + "/library/")
+from util import write_scanresults
 
 from subprocess import Popen, PIPE
 from pathlib import Path
@@ -11,11 +13,6 @@ import sys
 import os
 import yaml
 import glob
-
-#import functions from util.py
-sys.path.append(os.getcwd() + "/library/")
-from util import write_scanresults
-
 
 ### Static Variables ###
 

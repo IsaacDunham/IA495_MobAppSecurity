@@ -5,16 +5,16 @@
 # 2. Ensure that code-signing certificate belongs to the developer. --
 #   Make sure it is not CN=Android Debug. Use jarsigner.
 
-### Imports ###
-from subprocess import Popen, PIPE
-from pathlib import Path
-import sys
-import os
-import json
-import glob
-
-#import functions from util.py
+# import functions from util.py
 sys.path.append(os.getcwd() + "/library/")
+
+### Imports ###
+
+import glob
+import os
+import sys
+from pathlib import Path
+from subprocess import Popen, PIPE
 from util import write_scanresults
 
 ### static variables ###
@@ -39,7 +39,7 @@ def main():
 
     path = os.path.dirname(sys.argv[1])
 
-    global issue 
+    global issue
     global debug_issue
     global signaturescheme_issue
 
@@ -64,12 +64,13 @@ def main():
 
         # check targetSdkVersion level
         if os.path.exists(os.getcwd() + "/edge_cases/apktool/" + friendlyname +
-                  "_targetSdkVersion.txt"):
+                          "_targetSdkVersion.txt"):
             with open(os.getcwd() + "/edge_cases/apktool/" + friendlyname +
-                    "_targetSdkVersion.txt", "r") as f:
+                      "_targetSdkVersion.txt", "r") as f:
                 targetSdkVersion = int(f.read())
         else:
-            print("targetSdkVersion not found for " + filename + ". Noting as 0.")
+            print("targetSdkVersion not found for " +
+                  filename + ". Noting as 0.")
             targetSdkVersion = 0
 
         if targetSdkVersion < 24:
