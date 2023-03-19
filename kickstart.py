@@ -36,14 +36,26 @@ p = Popen(["mobsfscan", "--json", "-o", outpath, path], stdout=PIPE,
 output, err = p.communicate()
 rc = p.returncode
 
-"""if rc != 0: mobfscan is expected to have a non-zero return code, for now
+"""if rc != 0: mobsfscan is expected to have a non-zero return code, for now
     print("Error: " + str(err))
     print("mobsfscan failed")
     sys.exit(1)
 """
+<<<<<<< HEAD
+
+# Run edge case scripts
+
+scripts = []
+for f in glob.glob(edgecases_dir + "*.py", recursive=True):
+    scripts += [f]
+
+for script in scripts:
+    os.system(script + " " + path)
+=======
     
 #Run edge case scripts
 os.system(edgecases_dir + "targetSdkVersion.py " + path)
+>>>>>>> 64e76f7568fc02f6559e947165512e37e78a145e
 
 
 #Run report script
