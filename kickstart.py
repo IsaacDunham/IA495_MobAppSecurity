@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3.8
 
 # this script will initiate mobsfscan, saving its json file to
 # to scan_results.json. Then, it will kickstart our custom scripts to append
@@ -15,6 +15,7 @@ current_dir = os.getcwd() + "/"
 
 ### Static Variables ###
 outpath = current_dir + "scan_results.json"
+best_practices_dir = current_dir + "semgrep/"
 
 
 # Run mobsfscan and output JSON file
@@ -22,6 +23,11 @@ outpath = current_dir + "scan_results.json"
 
 if len(sys.argv) < 2:
     print("Usage: " + sys.argv[0] + " root directory of mobile application")
+    sys.exit(1)
+
+# Ending in a slash ensures glob works correctly
+if (sys.argv[1][-1] != "/"):
+    print("Please provide a trailing slash to the provided directory.")
     sys.exit(1)
 
 # Checking that exists and is correct
@@ -48,10 +54,15 @@ rc = p.returncode
 scripts = []
 for f in glob.glob(edgecases_dir + "*.py", recursive=True):
     scripts += [f]
+scripts.sort()
 
 for script in scripts:
     os.system(script + " " + path)
 
+# Perform custom semgrep scans -- best practices
+os.system(current_dir + "semgrep/best_practices.py " + path)
 
 # Run report script
 os.system(current_dir + "make_pdf.py")
+
+print("Completed! Please view the ScanResults pdf for detected potential OWASP Mobile App Security Verification Framework violations. For MSTG-CODE-5, review the OWASP Dependency Checker HTML report.")

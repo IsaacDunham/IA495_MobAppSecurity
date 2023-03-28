@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3.8
 # 1.	Make sure that the release build has been signed via both the v1 and v2
 #   schemes for Android 7.0 (API level 24) and above and via all three schemes
 #   for Android 9 (API level 28) and above. Use apksigner.
@@ -11,7 +11,6 @@
 import glob
 import os
 import sys
-from pathlib import Path
 from subprocess import Popen, PIPE
 
 sys.path.append(os.getcwd() + "/library/")
