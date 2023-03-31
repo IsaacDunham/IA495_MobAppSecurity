@@ -10,3 +10,6 @@ This repository will be made private or shut down after May of 2023.
 
 ## Usage Instructions
 After cloning the repository, run `chmod +x` on `install.sh.` Then use `./install.sh` from the repo directory to install pre-requisite files and change Python script execution permissions. DO NOT use `sudo ./install.sh`.
+
+## Platform Support
+At this time, this configuration is only supported on fresh Ubuntu 18.04.6 LTS (Bionic Beaver) installations.
