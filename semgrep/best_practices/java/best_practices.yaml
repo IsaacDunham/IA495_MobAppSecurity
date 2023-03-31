@@ -1,0 +1,61 @@
+rules:
+- id: detect_emulator
+  patterns:
+    - pattern-either:
+      - pattern: |
+          $VAR = telephonyManager.getDeviceId(); 
+          ...
+          if (<... $VAR.equals("000000000000000") ...>)
+            ...
+
+      - pattern: |
+          $VAR = telephonyManager.getSimSerialNumber();
+          ...
+          if (<... $VAR.equals("89014103211118510720") ...>)
+            ...
+
+      - pattern: |
+          $VAR = telephonyManager.getLine1Number();
+          ...
+          if (<... $VAR.equals("155552155") ...>)
+            ...
+
+      - pattern: |
+          $VAR = telephonyManager.getVoiceMailNumber();
+          ...
+          if (<... $VAR.equals("15552175049") ...>)
+            ...
+      - pattern: |
+          $VAR = telephonyManager.getSubscriberId() ;
+          ...
+          if (<... $VAR.equals("310260000000000") ...>)
+            ...
+  metadata:
+    cwe: cwe-919
+    masvs: resilience-5
+    owasp-mobile: m1
+    reference: 
+      - https://github.com/OWASP/owasp-mastg/blob/master/Document/0x05j-Testing-Resiliency-Against-Reverse-Engineering.md#emulator-detection
+      - https://github.com/OWASP/owasp-masvs/blob/master/Document/0x15-V8-Resiliency_Against_Reverse_Engineering_Requirements.md
+  message: This app does not possess the OWASP MASTG-specified means of detecting Android emulators (MSTG-RESILIENCE-5).
+  languages: [java]
+  severity: INFO
+
+- id: device_binding
+  patterns:
+    - pattern-either:
+      - pattern: $VAR = AdvertisingIdClient.getAdvertisingIdInfo(...);
+      - pattern: AdvertisingIdClient.getAdvertisingIdInfo(...);
+      - pattern: FirebaseInstanceId.getInstance()
+      - pattern: $VAR = FirebaseInstanceId.getInstance(); $VAR.getId();
+      - pattern: FirebaseInstallations.getId()
+      - pattern: $VAR = Settings.Secure.getString(...);
+      - pattern: Settings.Secure.getString(...)
+  message: This app is missing common means of performing device binding. Please ensure device binding is implemented to prevent attackers from copying an app and its state to a new device.
+  languages: [java]
+  severity: INFO
+  metadata: 
+      cwe: cwe-919
+      masvs: resilience-10
+      owasp-mobile: m4
+      reference: https://github.com/OWASP/owasp-mastg/blob/master/Document/0x05j-Testing-Resiliency-Against-Reverse-Engineering.md#testing-device-binding-mstg-resilience-10

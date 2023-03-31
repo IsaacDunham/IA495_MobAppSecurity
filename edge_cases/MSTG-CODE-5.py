@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3.8
 # 1. detect vulnerabilities in third-party dependencies using OWASP Dependency Checker
 
 

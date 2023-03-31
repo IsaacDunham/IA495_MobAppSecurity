@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3.8
 # 1. ensure that cppFlags "-fvisibility=hidden" is set in the build.gradle file
 
 ### Imports ###
@@ -28,6 +28,7 @@ def main():
         print(
             "Usage: " + sys.argv[0] + "root directory of mobile application")
         sys.exit(1)
+
 
     path = os.path.dirname(sys.argv[1])
 

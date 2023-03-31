@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3.8
 # This script will check the targetSdkVersion of an APK file. To do this, it will
 # create an apktool.yml file using /usr/bin/apktool. #It will then
 # read the contents of the file in Python and extract the targetSdkVersion.
@@ -70,6 +70,7 @@ def main():
         print(
             "Usage: " + sys.argv[0] + " root directory of mobile application")
         sys.exit(1)
+
 
     path = os.path.dirname(sys.argv[1])
     files = []

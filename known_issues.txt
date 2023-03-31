@@ -1,0 +1,3 @@
+*Globbing seems to go up one directory for the custom test cases. Solution: Ensure that "path" is appended with forward slash. Translation error between kickstart and edge cases causes appended slash to disappear. 
+*best_practices.py needs rewriting to reduce redundant and unnecessary code that stemmed from deviation from mobsfscan implementation of similar function
+*best practices detection is not perfectly consistent.
