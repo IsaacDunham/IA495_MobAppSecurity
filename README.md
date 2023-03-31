@@ -9,4 +9,4 @@ Project is primarily designed to be compatible with and shares some architectura
 This repository will be made private or shut down after May of 2023.
 
 ## Usage Instructions
-After cloning the repository, run `chmod +x` on `install.sh.` Then use `sudo ./install.sh` from the repo directory to install pre-requisite files and change Python script execution permissions. 
+After cloning the repository, run `chmod +x` on `install.sh.` Then use `./install.sh` from the repo directory to install pre-requisite files and change Python script execution permissions. DO NOT use `sudo ./install.sh`.
