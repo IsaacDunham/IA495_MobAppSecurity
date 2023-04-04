@@ -59,7 +59,9 @@ def main():
 
     ids, all_rules = get_best_practices(extensions)
     #need to investigate this further to determine necessity
-    result_keys = results['results'].keys() #this set vs dict comparison is apparently done fine already
+
+    #result keys are the rule ids
+    result_keys = results['results'].keys() 
     deleted = set()
     for rule_id in ids:
         if rule_id in result_keys:
@@ -79,6 +81,8 @@ def main():
         res['metadata']['description'] = details['message']
         res['metadata']['severity'] = details['severity']
 
-        write_results['results'] = {rule_id: res}
-        write_scanresults(write_results, output_json)
+        #need to append and then write_scanresults at end, because some function
+        #does not like writing to a file multiple times in one execution. 
+        write_results['results'].update({rule_id: res})
+    write_scanresults(write_results['results'], output_json)
 main()

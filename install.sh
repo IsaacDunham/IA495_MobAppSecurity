@@ -12,7 +12,7 @@ sudo apt install python3.8-dev python3.8 python3-pip apksigner apktool unzip ope
 python3.8 -m pip install reportlab mobsfscan setuptools semgrep
 sudo snap install mobsfscan
 
-#libsast sometimes fails, do it again after mobsfscan and semgrep.
+#libsast sometimes fails, do it after mobsfscan and semgrep.
 python3.8 -m pip install libsast
 
 #Checking current directory
