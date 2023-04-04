@@ -59,3 +59,16 @@ rules:
       masvs: resilience-10
       owasp-mobile: m4
       reference: https://github.com/OWASP/owasp-mastg/blob/master/Document/0x05j-Testing-Resiliency-Against-Reverse-Engineering.md#testing-device-binding-mstg-resilience-10
+      
+- id: detect_lockscreen
+  pattern: $VAR.isKeyguardSecure()
+  message: This app is missing capabilities to detect a lockscreen. OWASP does not recommend apps that require L2 of security controls to only rely on the native Android confirm credential flow. Ensure the app is checking for a lock screen and using a key protected by the lockscreen.  
+  languages: [java]
+  severity: INFO
+  metadata: 
+      cwe: cwe-287
+      masvs: auth-1
+      owasp-mobile: m4
+      reference: 
+        - https://github.com/OWASP/owasp-mastg/blob/master/Document/ 0x05f-Testing-Local-Authentication.md
+        - https://github.com/OWASP/owasp-masvs/blob/master/Document/07-MASVS-AUTH.md
