@@ -60,7 +60,7 @@ for script in scripts:
     os.system(script + " " + path)
 
 # Perform custom semgrep scans -- best practices
-os.system(current_dir + "semgrep/best_practices.py " + path)
+os.system(current_dir + "semgrep/best_practices.py " + sys.argv[1])
 
 # Run report script
 os.system(current_dir + "make_pdf.py")
