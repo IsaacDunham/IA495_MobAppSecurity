@@ -89,11 +89,9 @@ def main():
             p = Popen(["grep", '"verified using"'], stdout=PIPE, stdin=PIPE)
             output, err = p.communicate()
             if "Verified using v1 scheme (JAR signing): true" not in str(output):
-                print("v1 scheme not used")
                 issue = True
                 issuefiles.append(filename)
             if "Verified using v2 scheme (APK Signature Scheme v2): true" not in str(output):
-                print("v2 scheme not used")
                 issue = True
                 issuefiles.append(filename)
 

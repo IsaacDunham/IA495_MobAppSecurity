@@ -50,10 +50,29 @@ def main():
         print("Error: " + str(err))
         print("Docker check failed")
         sys.exit(1)
-    if len(str(output)) == 0:
+    if str(output) == "b''":
         print("Docker image not found. Building...")
-        p = Popen(["git clone https://github.com/rednaga/APKiD"], stdout=PIPE)
+        p = Popen(["git", "clone", "https://github.com/rednaga/APKiD", apkid_path], stdout=PIPE)
+        output, err = p.communicate()
+        rc = p.returncode
+        if rc != 0:
+            print("Error: " + str(err))
+            print("git clone failed for MSTG-RESILIENCE-9")
         p = Popen(["sudo", "docker", "build", apkid_path, "-t", "rednaga:apkid"], stdout=PIPE)
+        output, err = p.communicate()
+        rc = p.returncode
+        if rc != 0:
+            print("Error: " + str(err))
+            print("Docker build failed for MSTG-RESILIENCE-9")
+    
+    if not os.path.exists(apkid_path):
+        print("APKiD not found. Cloning...")
+        p = Popen(["git", "clone", "https://github.com/rednaga/APKiD", apkid_path], stdout=PIPE)
+        output, err = p.communicate()
+        rc = p.returncode
+        if rc != 0:
+            print("Error: " + str(err))
+            print("git clone failed for MSTG-RESILIENCE-9")
 
     for f in glob.glob(path + "/**/*.apk", recursive=True):
         files += [f]
@@ -79,7 +98,7 @@ def main():
         if "obfuscator:" not in str(output):
             issue = True
             issuefiles += [filename]
-            print("Obfuscator missing in ", filename)
+            print("Obfuscator missing in", filename)
     
 
     if issue:
