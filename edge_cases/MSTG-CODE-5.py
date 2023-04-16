@@ -58,7 +58,7 @@ def main():
         print("retrieving OWASP dependency checker version failed")
         sys.exit(1)
 
-    if os.path.exists(outpath + "dependency-check"): #figure out full path later:
+    if os.path.exists(outpath + "dependency-check"):
         print("OWASP dependency checker already installed")
     else:
         if not (os.path.exists(outpath)):

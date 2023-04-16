@@ -8,7 +8,7 @@ else
     echo "Exiting..."
     exit 1
 fi
-sudo apt install python3.8-dev python3.8 python3-pip apksigner apktool unzip openjdk-17-jdk-headless libjpeg-dev zlib1g-dev libfreetype6-dev openjdk-17-jdk -y
+sudo apt install python3.8-dev python3.8 python3-pip apksigner apktool unzip openjdk-17-jdk-headless libjpeg-dev zlib1g-dev libfreetype6-dev openjdk-17-jdk docker.io -y
 python3.8 -m pip install reportlab mobsfscan setuptools semgrep
 sudo snap install mobsfscan
 
