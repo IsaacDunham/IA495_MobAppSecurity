@@ -72,7 +72,7 @@ def main():
                 "masvs": "MSTG-CODE-3",
                 "owasp-mobile": "M9: Reverse Engineering",
                 "reference": ["https://developer.android.com/studio/publish/preparing#publishing-configure",
-                              "https://github.com/OWASP/owasp-masvs/blob/master/Document/0x12-V7-Code_quality_and_build_setting_requirements.md",
+                              "https://github.com/OWASP/owasp-masvs/blob/master/Document/10-MASVS-CODE.md",
                               "https://github.com/OWASP/owasp-mastg/blob/master/Document/0x05i-Testing-Code-Quality-and-Build-Settings.md#testing-for-debugging-symbols-mstg-code-3"
                               ],
                 "severity": "INFO"

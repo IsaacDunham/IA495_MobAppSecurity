@@ -89,11 +89,9 @@ def main():
             p = Popen(["grep", '"verified using"'], stdout=PIPE, stdin=PIPE)
             output, err = p.communicate()
             if "Verified using v1 scheme (JAR signing): true" not in str(output):
-                print("v1 scheme not used")
                 issue = True
                 issuefiles.append(filename)
             if "Verified using v2 scheme (APK Signature Scheme v2): true" not in str(output):
-                print("v2 scheme not used")
                 issue = True
                 issuefiles.append(filename)
 
@@ -135,7 +133,7 @@ def main():
                     "description": "The release build has not been signed via both the v1 and v2 schemes for Android 7.0 (API level 24) and above and via all three schemes for Android 9 (API level 28) and above. Please ensure the application is signed via all three schemes for Android 9 (API level 28) and above and via both the v1 and v2 schemes for Android 7.0 (API level 24) and above.",
                     "masvs": "MSTG-CODE-1",
                     "owasp-mobile": "M3: Insecure Communication",
-                    "reference": ["https://github.com/OWASP/owasp-masvs/blob/master/Document/0x12-V7-Code_quality_and_build_setting_requirements.md",
+                    "reference": ["https://github.com/OWASP/owasp-masvs/blob/master/Document/10-MASVS-CODE.md",
                                   "https://github.com/OWASP/owasp-mastg/blob/master/Document/0x05i-Testing-Code-Quality-and-Build-Settings.md"
                                   ],
                     "severity": "WARNING"
